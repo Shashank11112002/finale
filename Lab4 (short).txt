@@ -1,0 +1,29 @@
+# !! Not given by chandru sir !!
+# uses scikit-learn module and outputs a Decision tree
+
+!pip install scikit-learn
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier
+from sklearn import preprocessing
+from sklearn.tree import plot_tree
+import matplotlib.pyplot as plt
+
+# Load data
+df_tennis = pd.read_csv('weatherid3.csv')
+
+# Convert categorical variables to numeric codes
+le = preprocessing.LabelEncoder()
+df_encoded = df_tennis.apply(le.fit_transform)
+
+# Separate features and target
+X = df_encoded.drop('PlayTennis', axis=1)
+y = df_encoded['PlayTennis']
+
+# Create Decision Tree classifier
+clf = DecisionTreeClassifier(criterion='entropy')
+clf.fit(X, y)
+
+# Visualize the tree
+plt.figure(figsize=(12,8))
+plot_tree(clf, filled=True, feature_names=X.columns, class_names=['No', 'Yes'], rounded=True)
+plt.show()

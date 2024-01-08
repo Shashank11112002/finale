@@ -1,0 +1,20 @@
+#this uses inbuild local regression lowes function 
+#  !!  not given by chandru sir!!
+
+import numpy as np
+import matplotlib.pyplot as plt
+from statsmodels.nonparametric.smoothers_lowess import lowess
+
+# Generating data
+x = np.linspace(-5, 5, 1000)
+y = np.log(np.abs((x ** 2) - 1) + 0.5)
+x = x + np.random.normal(scale=0.05, size=1000)
+
+# Using LOWESS from statsmodels for local regression
+fraction = 0.03  # This is analogous to the tau in your implementation
+lowess_results = lowess(y, x, frac=fraction)
+
+# Plotting
+plt.scatter(x, y, alpha=0.3)
+plt.plot(lowess_results[:, 0], lowess_results[:, 1], color='red')
+plt.show()
